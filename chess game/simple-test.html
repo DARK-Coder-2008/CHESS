@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chess Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-yellow-400 mb-2 text-center">Simple Chess Test</h1>
+        
+        <div class="max-w-md mx-auto mb-8">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Test Results</h2>
+                <div id="testResults" class="space-y-2">
+                    <div id="basicTest" class="text-yellow-400">⏳ Testing basic functionality...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center space-x-4">
+            <button onclick="testBasic()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                Test Basic
+            </button>
+            <button onclick="window.open('index.html', '_blank')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                Open Main Game
+            </button>
+        </div>
+    </div>
+
+    <script src="chess.js"></script>
+    <script>
+        function testBasic() {
+            try {
+                // Test 1: Create game instance
+                const game = new ChessGame();
+                document.getElementById('basicTest').innerHTML = '✓ Game created successfully';
+                document.getElementById('basicTest').className = 'text-green-400';
+                
+                // Test 2: Check board
+                if (game.board && game.board.length === 8) {
+                    document.getElementById('basicTest').innerHTML += '<br>✓ Board initialized';
+                }
+                
+                // Test 3: Check if pieces exist
+                let pieceCount = 0;
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        if (game.board[row][col]) pieceCount++;
+                    }
+                }
+                document.getElementById('basicTest').innerHTML += '<br>✓ Found ' + pieceCount + ' pieces';
+                
+                console.log('Basic test passed');
+                
+            } catch (error) {
+                console.error('Test failed:', error);
+                document.getElementById('basicTest').innerHTML = '✗ Test failed: ' + error.message;
+                document.getElementById('basicTest').className = 'text-red-400';
+            }
+        }
+        
+        // Run test automatically
+        window.addEventListener('load', function() {
+            setTimeout(testBasic, 1000);
+        });
+    </script>
+</body>
+</html> 

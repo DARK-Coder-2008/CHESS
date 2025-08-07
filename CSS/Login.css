@@ -1,0 +1,212 @@
+* { 
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom right, #1e1e1e, #2e2e2e);
+    color: blueviolet;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('/img/Bg.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  /* Volume button container */
+.top-icons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+/* Volume button style */
+.volumeToggle {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.volumeToggle:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+  
+  .right-section {
+    background: rgba(0, 0, 0, 0.85);
+    padding: 40px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 0 50px #0ef;
+  }
+  .right-section:hover{
+    animation:animate 1s linear infinite;
+  }
+  @keyframes animate {
+    100%{
+      filter: hue-rotate(360deg);
+    }
+    
+  }
+  .form-box h2 {
+    text-align: center;
+    color: #0ef;
+    margin-bottom: 20px;
+  }
+  
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;  /* Increased gap between inputs */
+    align-items: center;  /* Center all elements inside the form */
+  }
+  
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="password"] {
+    margin: 11px;
+    padding: 12px;
+    border: none;
+    border-radius: 34px;
+    font-size: 16px;
+    width: 100%; /* Ensure inputs take full width */
+    max-width: 300px; /* Max width to ensure form doesn't stretch too much */
+  }
+  
+  button {
+    background: transparent;
+    color:#0ef;
+    border: 2px solid #0ef;
+    padding: 10px 12px;
+    border-radius: 34px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;  /* Ensure the button takes full width */
+    max-width: 300px; /* Max width to match inputs */
+  }
+  
+  button:hover {
+    background-color: #0ef;
+    color: #000;
+  }
+  
+  .social-login {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .social-btn {
+    flex: 1;
+    margin: 0 5px;
+    background-color:transparent;
+    color:aqua;
+    border: none;
+    border-radius: 35px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .social-btn:hover {
+    background-color: #666;
+  }
+  
+  .switch-form {
+    margin-top: 20px;
+    text-align: center;
+    cursor: pointer;
+    color: #0ef;
+    text-decoration: underline;
+  }
+  .password-wrapper {
+    position: relative;
+  }
+  
+  .password-wrapper input[type="password"],
+  .password-wrapper input[type="text"] {
+    width: 100%;
+    padding-right: 106px; /* space for icon */
+  }
+  
+  .password-wrapper .toggle-eye {
+    position: absolute;
+    top: 50%;
+    right: 24px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+    font-size: 18px;
+  }
+  
+  #guestSection {
+    text-align: center;
+    margin-top: 25px;
+  }
+  
+  #guestName {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 90%;
+    border-radius: 34px;
+    border: none;
+  }
+  
+  #guestButton {
+    background: transparent;
+    border: 2px solid #0ef;
+    color: #0ef;
+    padding: 10px 20px;
+    border-radius: 34px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  #guestButton:hover {
+    background-color: #0ef;
+    color: #000;
+  }
+  
+  /* Style the Signup Form Inputs with a gap */
+  #signupForm input {
+    margin-bottom: 15px;
+  }
+  
+  #signupForm button {
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border-radius: 34px;
+    background-color: #0ef;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  #signupForm small {
+    font-size: 12px;
+    color: red;
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+  }
+  

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chess Login</title>
+  <link rel="stylesheet" href="./CSS/Login.css">
+</head>
+
+<body>
+
+  <!-- 🔊 Volume Button and Audio -->
+  <div class="top-icons">
+    <button class="volumeToggle" onclick="toggleVolume()" title="Toggle Sound">🔊</button>
+  </div>
+  <audio id="bgMusic" autoplay loop>
+    <source src="./Sound/pixel-heaven-ringtone-323026.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+
+  <div class="right-section">
+    <div class="form-box">
+      <h2 id="formTitle" >Login</h2>
+
+      <!-- Login Form -->
+       
+      <form id="loginForm" onsubmit="return loginUser(event)">
+        <input type="text" id="username" placeholder="Username (Email or Phone)" required />
+        <div class="password-wrapper">
+          <input type="password" id="loginPassword" placeholder="Password" required />
+          <span class="toggle-eye" onclick="togglePassword('loginPassword', this)">👁️</span>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      
+
+      <!-- Guest Mode -->
+      <div id="guestSection">
+        <input type="text" id="guestName" placeholder="Enter name to play as Guest" />
+        <button id="guestButton" onclick="continueAsGuest()">Play as Guest</button>
+      </div>
+
+      <!-- Signup Form -->
+      
+      <form id="signupForm" style="display: none;" onsubmit="return signUpUser(event)">
+        <input type="text" id="name" placeholder="Full Name" required />
+        <input type="tel" id="phone" placeholder="Phone Number" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <small id="emailError" style="color:red; display:none;">Invalid email</small>
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Password" required />
+          <span class="toggle-eye" onclick="togglePassword('password', this)">👁️</span>
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+      
+
+      <!-- Social Login -->
+      <div class="social-login">
+        <button class="social-btn">Google</button>
+        <button class="social-btn">Facebook</button>
+        <button class="social-btn">Instagram</button>
+      </div>
+
+      
+      <!-- Toggle -->
+      <div class="switch-form" onclick="toggleForms()">
+        Don’t have an account? Sign up
+      </div>
+    </div>
+  </div>
+  <script src="./JS/login.js"></script>
+  
+</body>
+</html>
+  <script>
+    // Helper: Get users from localStorage
+    function getUsers() {
+      const users = localStorage.getItem('users');
+      return users ? JSON.parse(users) : [];
+    }
+
+    // Helper: Save users to localStorage
+    function saveUsers(users) {
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    // Login function
+    function loginUser(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const users = getUsers();
+      const user = users.find(u => (u.email === username || u.phone === username) && u.password === password);
+      if (user) {
+        // Redirect to chess game index.html
+        window.location.href = './chess game/index.html';
+        return false;
+      } else {
+        alert('Invalid username or password.');
+        return false;
+      }
+    // Guest Mode: Continue as Guest
+    function continueAsGuest() {
+      const guestName = document.getElementById('guestName').value.trim();
+      if (!guestName) {
+        alert('Please enter a name to play as Guest.');
+        return;
+      }
+      // Optionally store guest name in localStorage or sessionStorage
+      localStorage.setItem('guestName', guestName);
+      window.location.href = './chess game/index.html';
+    }
+    }
+
+    // Signup function
+    function signUpUser(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const emailError = document.getElementById('emailError');
+      // Simple email validation
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        emailError.style.display = 'block';
+        return false;
+      } else {
+        emailError.style.display = 'none';
+      }
+      let users = getUsers();
+      if (users.some(u => u.email === email || u.phone === phone)) {
+        alert('User already exists with this email or phone.');
+        return false;
+      }
+      users.push({ name, phone, email, password });
+      saveUsers(users);
+      alert('Signup successful! You can now log in.');
+      toggleForms();
+      return false;
+    }
+
+    // Toggle between login and signup forms
+    function toggleForms() {
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+      const formTitle = document.getElementById('formTitle');
+      const switchForm = document.querySelector('.switch-form');
+      if (loginForm.style.display === 'none') {
+        loginForm.style.display = '';
+        signupForm.style.display = 'none';
+        formTitle.textContent = 'Login';
+        switchForm.textContent = 'Don’t have an account? Sign up';
+      } else {
+        loginForm.style.display = 'none';
+        signupForm.style.display = '';
+        formTitle.textContent = 'Sign Up';
+        switchForm.textContent = 'Already have an account? Login';
+      }
+    }
+
+    // Password show/hide
+    function togglePassword(inputId, eyeIcon) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        eyeIcon.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        eyeIcon.textContent = '👁️';
+      }
+    }
+  </script>
+

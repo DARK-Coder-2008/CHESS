@@ -1,0 +1,142 @@
+/* Chess Board Styles */
+.hidden {
+    display: none !important;
+}
+
+.chess-square {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chess-square:hover {
+    transform: scale(1.05);
+}
+
+.chess-square.white {
+    background-color: #f0d9b5;
+}
+
+.chess-square.black {
+    background-color: #b58863;
+}
+
+.chess-square.selected {
+    background-color: #7b61ff !important;
+}
+
+.chess-square.valid-move {
+    background-color: #90EE90 !important;
+}
+
+.chess-square.check {
+    background-color: #ff6b6b !important;
+}
+
+.chess-piece {
+    font-size: 40px;
+    user-select: none;
+    transition: transform 0.2s ease;
+}
+
+.chess-piece:hover {
+    transform: scale(1.1);
+}
+
+.chess-piece.dragging {
+    transform: scale(1.2);
+    z-index: 1000;
+}
+
+/* Move History Styles */
+.move-item {
+    padding: 8px;
+    border-bottom: 1px solid #374151;
+    display: flex;
+    justify-content: space-between;
+}
+
+.move-item:last-child {
+    border-bottom: none;
+}
+
+.move-number {
+    color: #9CA3AF;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .chess-square {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .chess-piece {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chess-square {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .chess-piece {
+        font-size: 24px;
+    }
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Game Status Animations */
+.game-status {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Piece Movement Animation */
+.piece-moving {
+    animation: movePiece 0.3s ease-in-out;
+}
+
+@keyframes movePiece {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Check Animation */
+.check-flash {
+    animation: checkFlash 0.5s ease-in-out;
+}
+
+@keyframes checkFlash {
+    0%, 100% { background-color: inherit; }
+    50% { background-color: #ff6b6b; }
+} 

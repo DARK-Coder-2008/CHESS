@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-yellow-400 mb-2 text-center">Multiplayer Test</h1>
+        
+        <div class="max-w-md mx-auto mb-8">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Connection Test</h2>
+                <div id="testResults" class="space-y-2">
+                    <div id="socketTest" class="text-yellow-400">⏳ Testing Socket.IO connection...</div>
+                    <div id="roomTest" class="text-yellow-400">⏳ Testing room creation...</div>
+                    <div id="gameTest" class="text-yellow-400">⏳ Testing game functionality...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center space-x-4">
+            <button onclick="testSocket()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                Test Socket
+            </button>
+            <button onclick="testRoom()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                Test Room
+            </button>
+            <button onclick="window.open('index.html', '_blank')" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg">
+                Open Main Game
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let socket = null;
+        
+        function testSocket() {
+            try {
+                socket = io();
+                
+                socket.on('connect', () => {
+                    document.getElementById('socketTest').innerHTML = '✓ Connected to server';
+                    document.getElementById('socketTest').className = 'text-green-400';
+                    console.log('Connected to server');
+                });
+                
+                socket.on('disconnect', () => {
+                    document.getElementById('socketTest').innerHTML = '✗ Disconnected from server';
+                    document.getElementById('socketTest').className = 'text-red-400';
+                });
+                
+                socket.on('connect_error', (error) => {
+                    document.getElementById('socketTest').innerHTML = '✗ Connection error: ' + error.message;
+                    document.getElementById('socketTest').className = 'text-red-400';
+                    console.error('Connection error:', error);
+                });
+                
+            } catch (error) {
+                document.getElementById('socketTest').innerHTML = '✗ Socket test failed: ' + error.message;
+                document.getElementById('socketTest').className = 'text-red-400';
+                console.error('Socket test failed:', error);
+            }
+        }
+        
+        function testRoom() {
+            if (!socket) {
+                alert('Please test socket connection first');
+                return;
+            }
+            
+            try {
+                socket.emit('createRoom');
+                
+                socket.on('roomCreated', (data) => {
+                    document.getElementById('roomTest').innerHTML = '✓ Room created: ' + data.roomCode;
+                    document.getElementById('roomTest').className = 'text-green-400';
+                    console.log('Room created:', data.roomCode);
+                    
+                    // Test joining the same room
+                    setTimeout(() => {
+                        socket.emit('joinRoom', data.roomCode);
+                    }, 1000);
+                });
+                
+                socket.on('roomJoined', (data) => {
+                    document.getElementById('gameTest').innerHTML = '✓ Room joined successfully';
+                    document.getElementById('gameTest').className = 'text-green-400';
+                    console.log('Room joined:', data);
+                });
+                
+                socket.on('roomError', (data) => {
+                    document.getElementById('roomTest').innerHTML = '✗ Room error: ' + data.message;
+                    document.getElementById('roomTest').className = 'text-red-400';
+                    console.error('Room error:', data);
+                });
+                
+            } catch (error) {
+                document.getElementById('roomTest').innerHTML = '✗ Room test failed: ' + error.message;
+                document.getElementById('roomTest').className = 'text-red-400';
+                console.error('Room test failed:', error);
+            }
+        }
+        
+        // Auto-test on load
+        window.addEventListener('load', function() {
+            setTimeout(testSocket, 1000);
+        });
+    </script>
+</body>
+</html> 

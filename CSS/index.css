@@ -1,0 +1,136 @@
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body with logo-based theme */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(20, 20, 50, 0.8)), url('/img/chess-logo-bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .volumeToggle{
+    background: #000;
+  }
+  .top-icons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .top-icons button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  
+  /* Container Split */
+  .main-container {
+    display: flex;
+    width: 90%;
+    max-width: 1400px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0px 80px rgb(132, 0, 255);
+    backdrop-filter: blur(50px);
+  }
+  
+  /* Left Section - Logo + Welcome */
+  .left-section {
+    flex: 1;
+    padding: 60px 40px;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .left-section img {
+    width: 140px;
+    border-radius: 50%;
+    margin-bottom: 25px;
+    border: 3px solid #fff;
+  }
+  
+  .left-section h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #2600ff;
+  }
+  
+  .left-section p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #ff0000;
+  }
+  
+  .left-section .button {
+    padding: 12px 30px;
+    background-color: #51ff00;
+    color: #222222;
+    font-weight: bold;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+  }
+  
+  .left-section .button:hover {
+    background-color: #e6c200;
+  }
+  
+
+  
+  /* Animations */
+  /* @keyframes fadeInUp {
+    from {
+      transform: translateY(40px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  } */
+  
+  #loginForm, #signupForm {
+    transition: all 0.5s ease;
+  }
+  
+  #loginForm.hide, #signupForm.hide {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .main-container {
+      flex-direction: column;
+      width: 95%;
+      margin: auto;
+    }
+  
+    .left-section, .right-section {
+      padding: 30px 20px;
+    }
+  
+    .left-section h1 {
+      font-size: 2.2rem;
+    }
+  }
+  

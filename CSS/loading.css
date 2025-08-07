@@ -1,0 +1,135 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-45deg, #0f172a, #1e293b, #0f172a, #1f2937);
+  background-size: 400% 400%;
+  animation: darkGradient 15s ease infinite;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Gradient animation */
+@keyframes darkGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Subtle glow overlay */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Background canvas */
+canvas#particles {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(45deg, #0f172a, #1e293b, #0f172a);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  filter: blur(2px);
+}
+
+/* Particle animation */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Logo styling */
+.logo {
+  font-size: 6vw;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #38bdf8, #f472b6, #38bdf8);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 4s linear infinite;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes shine {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Loader bar */
+.loader-bar {
+  margin-top: 5vh;
+  width: 80vw;
+  max-width: 320px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 0 15px #ffffff33;
+}
+
+.loader-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #22d3ee, #3b82f6);
+  border-radius: 25px;
+  transition: width 0.4s ease-in-out;
+  box-shadow: 0 0 8px #3b82f6cc;
+}
+
+/* Percentage label */
+.percentage {
+  margin-top: 2vh;
+  font-size: 4vw;
+  font-weight: 500;
+  color: #cbd5e1;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+/* Typed text animation */
+.typed-text {
+  margin-top: 3vh;
+  font-size: 5vw;
+  font-weight: 600;
+  color: #38bdf8;
+  min-height: 34px;
+  letter-spacing: 1px;
+  animation: fadeIn 4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Make all text scale well on small screens */
+@media (max-width: 480px) {
+  .logo {
+    font-size: 8vw;
+  }
+
+  .percentage,
+  .typed-text {
+    font-size: 5.5vw;
+  }
+
+  .loader-bar {
+    height: 14px;
+  }
+}

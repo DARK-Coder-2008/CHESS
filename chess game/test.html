@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Game Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-yellow-400 mb-2 text-center">Chess Game Test</h1>
+        
+        <div class="max-w-md mx-auto mb-8">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Test Results</h2>
+                <div id="testResults" class="space-y-2">
+                    <div id="boardTest" class="text-green-400">✓ Board initialization</div>
+                    <div id="moveTest" class="text-yellow-400">⏳ Move validation</div>
+                    <div id="aiTest" class="text-yellow-400">⏳ AI functionality</div>
+                    <div id="uiTest" class="text-yellow-400">⏳ UI responsiveness</div>
+                    <div id="userDataTest" class="text-yellow-400">⏳ User data load</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center space-x-4">
+            <button onclick="runTests()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                Run Tests
+            </button>
+            <button onclick="openMainGame()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                Open Main Game
+            </button>
+        </div>
+    </div>
+
+    <script src="chess.js"></script>
+    <script>
+        function runTests() {
+            console.log('Running chess game tests...');
+
+            // Test 5: User data JSON loading
+            if (typeof loadUserData === 'function') {
+                loadUserData().then(data => {
+                    if (data && Array.isArray(data.users)) {
+                        document.getElementById('userDataTest').innerHTML = '✓ User data load';
+                        document.getElementById('userDataTest').className = 'text-green-400';
+                    } else {
+                        document.getElementById('userDataTest').innerHTML = '✗ User data invalid';
+                        document.getElementById('userDataTest').className = 'text-red-400';
+                    }
+                }).catch(e => {
+                    document.getElementById('userDataTest').innerHTML = '✗ User data load failed';
+                    document.getElementById('userDataTest').className = 'text-red-400';
+                });
+            } else {
+                document.getElementById('userDataTest').innerHTML = '✗ loadUserData not found';
+                document.getElementById('userDataTest').className = 'text-red-400';
+            }
+            
+            try {
+                // Test 1: Board initialization
+                const game = new ChessGame();
+                document.getElementById('boardTest').innerHTML = '✓ Board initialization';
+                document.getElementById('boardTest').className = 'text-green-400';
+                
+                // Test 2: Move validation
+                const validMoves = game.getValidMoves(6, 0); // White pawn
+                if (validMoves.length > 0) {
+                    document.getElementById('moveTest').innerHTML = '✓ Move validation';
+                    document.getElementById('moveTest').className = 'text-green-400';
+                } else {
+                    document.getElementById('moveTest').innerHTML = '✗ Move validation failed';
+                    document.getElementById('moveTest').className = 'text-red-400';
+                }
+                
+                // Test 3: AI functionality
+                if (typeof game.makeAIMove === 'function') {
+                    document.getElementById('aiTest').innerHTML = '✓ AI functionality';
+                    document.getElementById('aiTest').className = 'text-green-400';
+                } else {
+                    document.getElementById('aiTest').innerHTML = '✗ AI functionality failed';
+                    document.getElementById('aiTest').className = 'text-red-400';
+                }
+                
+                // Test 4: UI elements
+                const requiredElements = ['gameModeSelection', 'gameContainer', 'chessboard'];
+                const missingElements = requiredElements.filter(id => !document.getElementById(id));
+                
+                if (missingElements.length === 0) {
+                    document.getElementById('uiTest').innerHTML = '✓ UI responsiveness';
+                    document.getElementById('uiTest').className = 'text-green-400';
+                } else {
+                    document.getElementById('uiTest').innerHTML = `✗ Missing elements: ${missingElements.join(', ')}`;
+                    document.getElementById('uiTest').className = 'text-red-400';
+                }
+                
+                console.log('Tests completed successfully');
+                
+            } catch (error) {
+                console.error('Test failed:', error);
+                document.getElementById('boardTest').innerHTML = '✗ Test failed: ' + error.message;
+                document.getElementById('boardTest').className = 'text-red-400';
+            }
+        }
+        
+        function openMainGame() {
+            window.open('index.html', '_blank');
+        }
+        
+        // Run tests automatically on page load
+        window.addEventListener('load', function() {
+            setTimeout(runTests, 1000);
+        });
+    </script>
+</body>
+</html> 
