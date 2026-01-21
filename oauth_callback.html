@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OAuth Callback</title>
+</head>
+<body>
+  <script>
+    // This page is opened in a popup by the login page. It extracts the access token from the URL
+    // hash or query and posts it back to window.opener using postMessage.
+
+    function parseHash(hash) {
+      if (!hash) return {};
+      const trimmed = hash.replace(/^#/, '');
+      return Object.fromEntries(trimmed.split('&').map(pair => pair.split('=').map(decodeURIComponent)));
+    }
+
+    (function () {
+      try {
+        const params = parseHash(window.location.hash);
+        // Also parse query params if needed
+        const query = Object.fromEntries(new URLSearchParams(window.location.search));
+        const data = Object.assign({}, query, params);
+        // state may be a JSON string encoded earlier
+        if (data.state) {
+          try { data._state = JSON.parse(decodeURIComponent(data.state)); } catch (e) { data._state = data.state; }
+        }
+        // Post data back to opener
+        if (window.opener && !window.opener.closed) {
+          window.opener.postMessage(data, '*'); // For production, replace '*' with exact origin
+          // Close popup after short delay
+          setTimeout(() => window.close(), 500);
+        } else {
+          document.body.innerText = 'No opener window found.';
+        }
+      } catch (err) {
+        document.body.innerText = 'OAuth callback failed.';
+      }
+    })();
+  </script>
+</body>
+</html>
